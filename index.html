@@ -3,19 +3,55 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>High and Low ゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f9;
+        }
+
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
-    <p>c</p>
-    <p>c</p>
-    <p>c</p>
-    <p>c</p>
-    <p>c</p>
-    <p>c</p>
-    <p>b</p>
+    <h1>High and Low ゲーム</h1>
+    <p>1から100までの数字を予想してください！</p>
+
+    <input type="number" id="guess" placeholder="予想する数字" min="1" max="100">
+    <button id="submitGuess">予想する</button>
+    <p id="result"></p>
+
+    <script>
+        // ランダムな数字を生成 (1から100まで)
+        const secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        document.getElementById('submitGuess').addEventListener('click', function () {
+            const guess = parseInt(document.getElementById('guess').value);
+            attempts++;
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                document.getElementById('result').textContent = "1から100までの数字を入力してください！";
+                return;
+            }
+
+            // 高いか低いかの判断
+            if (guess < secretNumber) {
+                document.getElementById('result').textContent = "High! もっと大きな数字です。";
+            } else if (guess > secretNumber) {
+                document.getElementById('result').textContent = "Low! もっと小さな数字です。";
+            } else {
+                document.getElementById('result').textContent = `正解です！${attempts}回で当たりました！`;
+            }
+        });
+    </script>
 </body>
 
 </html>
