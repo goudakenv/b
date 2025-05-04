@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>自分専用メモ掲示板</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>自分専用メモ掲示板</h1>
+    <textarea id="messageInput" placeholder="メモを入力..."></textarea><br>
+    <button onclick="addMessage()">保存</button>
+    <button onclick="clearMessages()">全削除</button>
+
+    <h2>保存されたメモ</h2>
+    <div id="messages"></div>
+
+    <script>
+        const STORAGE_KEY = "myMemoBoard";
+
+        function loadMessages() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            if (data) {
+                const messages = JSON.parse(data);
+                document.getElementById("messages").innerHTML = messages.map(msg => `<p>${msg}</p>`).join("");
+            }
+        }
+
+        function addMessage() {
+            const input = document.getElementById("messageInput");
+            const newMessage = input.value.trim();
+            if (!newMessage) return;
+
+            const data = localStorage.getItem(STORAGE_KEY);
+            const messages = data ? JSON.parse(data) : [];
+            messages.push(newMessage);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+            input.value = "";
+            loadMessages();
+        }
+
+        function clearMessages() {
+            localStorage.removeItem(STORAGE_KEY);
+            loadMessages();
+        }
+
+        loadMessages();
+    </script>
+</body>
+
+</html>
