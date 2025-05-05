@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>自分専用メモ掲示板</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px;
+            background-color: #f5f7fa;
+            color: #333;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+            font-size: 16px;
+            resize: vertical;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #messages {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        #messages p {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 8px 0;
+        }
+
+        h2 {
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>自分専用メモ掲示板</h1>
+
+    <header>
+        <nav>
+            <a href="High and Low .html">← High and Low ゲームへ戻る</a>
+        </nav>
+    </header>
+
+    <textarea id="messageInput" placeholder="メモを入力してください..."></textarea><br>
+    <button onclick="addMessage()">保存</button>
+    <button onclick="clearMessages()">全削除</button>
+
+    <h2>保存されたメモ</h2>
+    <div id="messages"></div>
+
+    <script>
+        const STORAGE_KEY = "myMemoBoard";
+
+        function loadMessages() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            if (data) {
+                const messages = JSON.parse(data);
+                document.getElementById("messages").innerHTML = messages.map(msg => `<p>${msg}</p>`).join("");
+            } else {
+                document.getElementById("messages").innerHTML = "<p>まだメモがありません。</p>";
+            }
+        }
+
+        function addMessage() {
+            const input = document.getElementById("messageInput");
+            const newMessage = input.value.trim();
+            if (!newMessage) return;
+
+            const data = localStorage.getItem(STORAGE_KEY);
+            const messages = data ? JSON.parse(data) : [];
+            messages.push(newMessage);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+            input.value = "";
+            loadMessages();
+        }
+
+        function clearMessages() {
+            if (confirm("本当にすべてのメモを削除しますか？")) {
+                localStorage.removeItem(STORAGE_KEY);
+                loadMessages();
+            }
+        }
+
+        loadMessages();
+    </script>
+</body>
+
+</html>
