@@ -518,6 +518,7 @@ if( m2 == 16 ){	//	洞窟
 	gPlayerX %= ( MAP_WIDTH  * TILESIZE );
 	gPlayerY += ( MAP_HEIGHT * TILESIZE );
 	gPlayerY %= ( MAP_HEIGHT * TILESIZE );
+	
 }
 
 
@@ -647,3 +648,32 @@ window.onload = function()
 	window.addEventListener( "resize", function(){ WmSize() } );	//	ブラウザサイズ変更時、WmSize()が呼ばれるよう指示
 	TUG.init();
 }
+
+window.addEventListener("load", () => {
+	document.getElementById("up").addEventListener("click", () => {
+		gAngle = 3;              // 上向き（上が3）
+		gMoveY = -TILESIZE;
+		gMoveX = 0;
+	});
+	document.getElementById("right").addEventListener("click", () => {
+		gAngle = 2;              // 右向き（右が2）
+		gMoveX = TILESIZE;
+		gMoveY = 0;
+	});
+	document.getElementById("down").addEventListener("click", () => {
+		gAngle = 0;              // 下向き（下が0）
+		gMoveY = TILESIZE;
+		gMoveX = 0;
+	});
+	document.getElementById("left").addEventListener("click", () => {
+		gAngle = 1;              // 左向き（左が1）
+		gMoveX = -TILESIZE;
+		gMoveY = 0;
+	});
+});
+
+
+
+
+
+
