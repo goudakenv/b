@@ -2,17 +2,68 @@
 <html lang="ja">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Script-Type" content="text/javascript">
-    <!-- <script type="text/javascript" src="TUGames1.js"></script> -->
-    <!-- <script type="text/javascript" src="main1.js"></script> -->
+    <meta charset="UTF-8" />
+    <title>複数ゲーム メニュー</title>
+    <style>
+        /* 全体の背景とフォント */
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 40px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            background: #4caf50;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.6);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        a:hover {
+            background: #66bb6a;
+            box-shadow: 0 8px 20px rgba(102, 187, 106, 0.9);
+            transform: translateY(-4px);
+        }
+
+        a:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(66, 165, 69, 0.8);
+        }
+    </style>
 </head>
 
-<body style="margin:0px;overflow:hidden">
-    <!-- <canvas id="main"></canvas> -->
+<body>
+    <h1>ダンジョンゲーム メニュー</h1>
+    <ul>
+        <li><a href="/dungeon_game/index0.html">テスト</a></li>
+        <li><a href="/dungeon_game/index1.html">レベル1</a></li>
+        <li><a href="/dungeon_game/index2.html">レベル2</a></li>
+    </ul>
 </body>
-<!-- <a href="index0.html">テスト</a> -->
-<a href="index1.html">レベル１</a>
-<a href="index2.html">レベル２</a>
 
 </html>
