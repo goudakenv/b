@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>複数ゲーム メニュー</title>
+    <title>ゲーム</title>
     <style>
         /* 全体の背景とフォント */
         body {
@@ -54,6 +54,22 @@
             transform: translateY(0);
             box-shadow: 0 4px 8px rgba(66, 165, 69, 0.8);
         }
+
+        /* 先ほどのメニューのCSSに加えてログインボタンなど */
+        #google-sign-in,
+        #sign-out-btn {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #user-info {
+            margin-top: 10px;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -62,8 +78,64 @@
     <ul>
         <li><a href="dungeon_game/index0.html">テスト</a></li>
         <li><a href="dungeon_game/index1.html">レベル1</a></li>
-        <li><a href="dungeon_game/index2.html">レベル2</a></li>        
+        <li><a href="dungeon_game/index2.html">レベル2</a></li>
     </ul>
+
+    <button id="google-sign-in">Googleでサインイン</button>
+    <button id="sign-out-btn" style="display:none;">サインアウト</button>
+    <div id="user-info" style="display:none;"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3QzOBknuvpVy1rcl9o2PJIsKjzcH6-Ko",
+            authDomain: "loginconnect-b3963.firebaseapp.com",
+            projectId: "loginconnect-b3963",
+            storageBucket: "loginconnect-b3963.appspot.com",
+            messagingSenderId: "362875108198",
+            appId: "1:362875108198:web:e94198275cbb42d6aca6a7",
+            measurementId: "G-THFPS2MKYJ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const signInBtn = document.getElementById('google-sign-in');
+        const signOutBtn = document.getElementById('sign-out-btn');
+        const userInfo = document.getElementById('user-info');
+
+        signInBtn.addEventListener('click', () => {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    // ログイン成功
+                })
+                .catch((error) => {
+                    alert("ログインに失敗しました: " + error.message);
+                });
+        });
+
+        signOutBtn.addEventListener('click', () => {
+            signOut(auth).catch((error) => {
+                alert("サインアウトに失敗しました: " + error.message);
+            });
+        });
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                userInfo.textContent = `ログイン中: ${user.displayName || user.email}`;
+                userInfo.style.display = "block";
+                signInBtn.style.display = "none";
+                signOutBtn.style.display = "inline-block";
+            } else {
+                userInfo.style.display = "none";
+                signInBtn.style.display = "inline-block";
+                signOutBtn.style.display = "none";
+            }
+        });
+    </script>
 </body>
 
 </html>
