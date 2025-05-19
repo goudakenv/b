@@ -55,7 +55,7 @@
             box-shadow: 0 4px 8px rgba(66, 165, 69, 0.8);
         }
 
-        /* 先ほどのメニューのCSSに加えてログインボタンなど */
+        /* ログインボタン */
         #google-sign-in,
         #sign-out-btn {
             margin: 20px;
@@ -110,7 +110,8 @@
             const provider = new GoogleAuthProvider();
             signInWithPopup(auth, provider)
                 .then((result) => {
-                    // ログイン成功
+                    console.log("ログイン成功:", result.user);
+                    // ここでユーザー情報を扱う処理を追加可能
                 })
                 .catch((error) => {
                     alert("ログインに失敗しました: " + error.message);
@@ -118,9 +119,13 @@
         });
 
         signOutBtn.addEventListener('click', () => {
-            signOut(auth).catch((error) => {
-                alert("サインアウトに失敗しました: " + error.message);
-            });
+            signOut(auth)
+                .then(() => {
+                    console.log("サインアウト成功");
+                })
+                .catch((error) => {
+                    alert("サインアウトに失敗しました: " + error.message);
+                });
         });
 
         auth.onAuthStateChanged((user) => {
