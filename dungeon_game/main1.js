@@ -649,30 +649,16 @@ window.onload = function()
 }
 
 function tryMove(dir) {
-    if (gMoveX !== 0 || gMoveY !== 0 || gMessage1) return;
-
-    switch (dir) {
-        case 'left':  gAngle = 1; gMoveX = -TILESIZE; break;
-        case 'up':    gAngle = 3; gMoveY = -TILESIZE; break;
-        case 'right': gAngle = 2; gMoveX =  TILESIZE; break;
-        case 'down':  gAngle = 0; gMoveY =  TILESIZE; break;
-    }
-}
-
-
-canvas.addEventListener("click", function () {
-    if (gMessage1) {
-        gMessage1 = null;
-    }
-});
-
-function tryMove(dir) {
+    // メッセージが表示されているなら、それを消して終了
     if (gMessage1) {
         gMessage1 = null;
         return;
     }
+
+    // 移動中なら何もしない
     if (gMoveX !== 0 || gMoveY !== 0) return;
 
+    // 指定された方向に向きを変えて移動
     switch (dir) {
         case 'left':  gAngle = 1; gMoveX = -TILESIZE; break;
         case 'up':    gAngle = 3; gMoveY = -TILESIZE; break;
@@ -680,3 +666,4 @@ function tryMove(dir) {
         case 'down':  gAngle = 0; gMoveY =  TILESIZE; break;
     }
 }
+
