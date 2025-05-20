@@ -653,75 +653,21 @@ window.onload = function()
 
 
 
+function tryMove(dir) {
+    // メッセージが表示されているなら、それを消して終了
+    if (gMessage1) {
+        gMessage1 = null;
+        return;
+    }
 
+    // 移動中なら何もしない
+    if (gMoveX !== 0 || gMoveY !== 0) return;
 
-
-
-window.addEventListener("load", () => {
-	LoadImage();
-	WmSize();
-	window.addEventListener("resize", () => { WmSize() });
-  
-	TUG.init();
-  
-	// 方向ボタンイベント登録（ここだけにまとめる）
-	document.getElementById("up").addEventListener("click", () => {
-	  gAngle = 3;
-	  gMoveY = -TILESIZE;
-	  gMoveX = 0;
-	});
-	document.getElementById("right").addEventListener("click", () => {
-	  gAngle = 2;
-	  gMoveX = TILESIZE;
-	  gMoveY = 0;
-	});
-	document.getElementById("down").addEventListener("click", () => {
-	  gAngle = 0;
-	  gMoveY = TILESIZE;
-	  gMoveX = 0;
-	});
-	document.getElementById("left").addEventListener("click", () => {
-	  gAngle = 1;
-	  gMoveX = -TILESIZE;
-	  gMoveY = 0;
-	});
-  
-	// Enterボタンイベント（IDはHTMLのIDに合わせてください）
-	document.getElementById("enter").addEventListener("click", () => {
-	  confirmBattleCommand();
-	});
-  
-	// キーボードイベント
-	window.addEventListener("keydown", (e) => {
-	  if (gPhase == 2) {
-		if (e.keyCode == 13 || e.keyCode == 90) {
-		  confirmBattleCommand();
-		} else {
-		  gCursor = 1 - gCursor;
-		}
-	  }
-	});
-  
-	function confirmBattleCommand() {
-	  if (gPhase == 2) {
-		gOrder = Math.floor(Math.random() * 2);
-		Action();
-	  }
-	}
-  });
-  
-  // 以下は不要なので削除
-  // document.getElementById("up").addEventListener(...);
-  // document.getElementById("right").addEventListener(...);
-  // ...
-  
-  canvas.addEventListener("click", function () {
-	// プレイヤーを1マス下に移動
-	playerY += 1;
-  
-	// 再描画（必要に応じて）
-	render();
-  });
-  
-  
-
+    // 指定された方向に向きを変えて移動
+    switch (dir) {
+        case 'left':  gAngle = 1; gMoveX = -TILESIZE; break;
+        case 'up':    gAngle = 3; gMoveY = -TILESIZE; break;
+        case 'right': gAngle = 2; gMoveX =  TILESIZE; break;
+        case 'down':  gAngle = 0; gMoveY =  TILESIZE; break;
+    }
+}
