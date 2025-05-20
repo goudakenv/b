@@ -3,62 +3,73 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Script-Type" content="text/javascript">
-    <script type="text/javascript" src="TUGames1.js"></script>
-    <script type="text/javascript" src="main1.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="TUGames1.js"></script>
+    <script src="main1.js"></script>
     <style>
-        .move-buttons {
+        body {
+            margin: 0;
+            overflow: hidden;
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        #main {
+            display: block;
+        }
+
+        .controller {
             position: absolute;
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 10;
+            width: 200px;
+            height: 200px;
             display: grid;
-            grid-template-columns: 100px 100px 100px;
-            grid-template-rows: 100px 100px 100px;
-            gap: 10px;
-            justify-content: center;
-            align-items: center;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 5px;
+            z-index: 10;
         }
 
-        .move-buttons button {
-            font-size: 32px;
-            padding: 20px;
-            border: none;
-            border-radius: 12px;
+        .btn {
             background-color: #444;
             color: white;
-            cursor: pointer;
-            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s;
+            font-size: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        .move-buttons button:hover {
+        .btn:active {
             background-color: #666;
         }
 
         .blank {
-            visibility: hidden;
+            background-color: transparent;
         }
     </style>
-
 </head>
 
-<body style="margin:0px; overflow:hidden">
-    <canvas id="main" style="display:block;"></canvas>
+<body>
+    <canvas id="main"></canvas>
 
-    <div class="move-buttons">
+    <div class="controller">
         <div class="blank"></div>
-        <button onclick="tryMove('up')">↑</button>
+        <div class="btn" ontouchstart="startMove('up')" ontouchend="stopMove()">↑</div>
         <div class="blank"></div>
 
-        <button onclick="tryMove('left')">←</button>
+        <div class="btn" ontouchstart="startMove('left')" ontouchend="stopMove()">←</div>
         <div class="blank"></div>
-        <button onclick="tryMove('right')">→</button>
+        <div class="btn" ontouchstart="startMove('right')" ontouchend="stopMove()">→</div>
 
         <div class="blank"></div>
-        <button onclick="tryMove('down')">↓</button>
+        <div class="btn" ontouchstart="startMove('down')" ontouchend="stopMove()">↓</div>
         <div class="blank"></div>
     </div>
 </body>
