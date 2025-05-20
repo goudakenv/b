@@ -6,19 +6,120 @@
     <meta http-equiv="Content-Script-Type" content="text/javascript">
     <script type="text/javascript" src="TUGames0.js"></script>
     <script type="text/javascript" src="main0.js"></script>
+
+    <style>
+        /* 方向キーコンテナの基本スタイル */
+        #direction-keys {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 160px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            user-select: none;
+            z-index: 10;
+        }
+
+        #direction-keys button {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            border-radius: 8px;
+            border: none;
+            background-color: #444;
+            color: white;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        #direction-keys button:active {
+            background-color: #666;
+        }
+
+        /* canvasの基本スタイル */
+        #main {
+            display: block;
+            margin: 0 auto;
+            background-color: #000;
+            width: 640px;
+            /* PC用幅 */
+            height: 480px;
+            /* PC用高さ */
+        }
+
+        /* ボタンの幅調整（スマホ時） */
+        #enter {
+            width: 28vw;
+        }
+
+
+        /* スマホなど幅600px以下の画面用 */
+        @media screen and (max-width: 600px) {
+            body {
+                margin: 0;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+            }
+
+            #main {
+                width: 100vw;
+                height: 50vh;
+                /* 画面高さの半分 */
+                flex-shrink: 0;
+            }
+
+            #direction-keys {
+                position: static;
+                width: 100vw;
+                height: 50vh;
+                /* 画面高さの半分 */
+                flex-wrap: nowrap;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                gap: 0;
+                margin-top: 0;
+                background-color: #222;
+            }
+
+            #direction-keys button {
+                width: 22vw;
+                /* 画面幅の22%くらい */
+                height: 22vw;
+                font-size: 32px;
+                border-radius: 16px;
+            }
+        }
+    </style>
 </head>
 
-<body style="margin:0px;overflow:hidden">
+<body>
     <canvas id="main"></canvas>
-</body>
 
-<!-- 方向キーコンテナ -->
-<div id="direction-keys"
-    style="position:fixed; bottom:10px; left:50%; transform:translateX(-50%); width:160px; height:160px; display:flex; flex-wrap: wrap; justify-content: center; align-items: center; gap:10px; user-select:none; z-index:10;">
-    <button id="up" style="width:50px; height:50px;">↑</button>
-    <button id="left" style="width:50px; height:50px;">←</button>
-    <button id="down" style="width:50px; height:50px;">↓</button>
-    <button id="right" style="width:50px; height:50px;">→</button>
-</div>
+    <!-- 方向キーコンテナ -->
+    <div id="direction-keys">
+        <button id="up">↑</button>
+        <button id="left">←</button>
+        <button id="down">↓</button>
+        <button id="right">→</button>
+        <button id="enterButton">エンター</button>
+
+        <script>
+            window.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("enterButton").addEventListener("click", function () {
+                    alert("エンターが押されました！");
+                });
+            });
+        </script>
+
+    </div>
+</body>
 
 </html>
