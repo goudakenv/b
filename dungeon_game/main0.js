@@ -673,14 +673,6 @@ function tryMove(dir) {
     }
 }
 
-
-
-
-
-
-
-
-
 let moveInterval = null;
 
 function startMove(dir) {
@@ -695,3 +687,28 @@ function stopMove() {
     clearInterval(moveInterval);
     moveInterval = null;
 }
+
+
+
+
+
+
+
+
+
+function enterAction() {
+    if (gMessage1) {
+        gMessage1 = null; // メッセージが表示されてたら消す
+    }
+    // ほかにイベントやフェーズがあればここで処理
+}
+
+function stopEnter() {
+    // 将来的に長押し対応したい場合に備えて定義（今は空でOK）
+}
+
+
+
+
+
+

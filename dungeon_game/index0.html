@@ -59,19 +59,21 @@
 <body>
     <canvas id="main"></canvas>
 
+    <!-- コントローラー中央にEnterボタンを追加 -->
     <div class="controller">
         <div class="blank"></div>
         <div class="btn" ontouchstart="startMove('up')" ontouchend="stopMove()">↑</div>
         <div class="blank"></div>
 
         <div class="btn" ontouchstart="startMove('left')" ontouchend="stopMove()">←</div>
-        <div class="blank"></div>
+        <div class="btn" ontouchstart="enterAction()" ontouchend="stopEnter()">●</div> <!-- ← Enter ボタン -->
         <div class="btn" ontouchstart="startMove('right')" ontouchend="stopMove()">→</div>
 
         <div class="blank"></div>
         <div class="btn" ontouchstart="startMove('down')" ontouchend="stopMove()">↓</div>
         <div class="blank"></div>
     </div>
+
 </body>
 
 </html>
