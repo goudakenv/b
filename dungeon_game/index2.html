@@ -6,10 +6,72 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <script type="text/javascript" src="TUGames1.js"></script>
 <script type="text/javascript" src="main2.js"></script>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    #main {
+        display: block;
+    }
+
+    .controller {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 200px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 5px;
+        z-index: 10;
+    }
+
+    .btn {
+        background-color: #444;
+        color: white;
+        font-size: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .btn:active {
+        background-color: #666;
+    }
+
+    .blank {
+        background-color: transparent;
+    }
+</style>
 </head>
 
-<body style="margin:0px;overflow:hidden">
+<body>
 <canvas id="main"></canvas>
+
+<div class="controller">
+    <div class="blank"></div>
+    <div class="btn" ontouchstart="startMove('up')" ontouchend="stopMove()">↑</div>
+    <div class="blank"></div>
+
+    <div class="btn" ontouchstart="startMove('left')" ontouchend="stopMove()">←</div>
+    <div class="blank"></div>
+    <div class="btn" ontouchstart="startMove('right')" ontouchend="stopMove()">→</div>
+
+    <div class="blank"></div>
+    <div class="btn" ontouchstart="startMove('down')" ontouchend="stopMove()">↓</div>
+    <div class="blank"></div>
+</div>
 </body>
 
 </html>
