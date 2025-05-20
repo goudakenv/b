@@ -518,7 +518,6 @@ if( m2 == 16 ){	//	洞窟
 	gPlayerX %= ( MAP_WIDTH  * TILESIZE );
 	gPlayerY += ( MAP_HEIGHT * TILESIZE );
 	gPlayerY %= ( MAP_HEIGHT * TILESIZE );
-	
 }
 
 
@@ -649,10 +648,6 @@ window.onload = function()
 	TUG.init();
 }
 
-
-
-
-
 function tryMove(dir) {
     // メッセージが表示されているなら、それを消して終了
     if (gMessage1) {
@@ -671,3 +666,4 @@ function tryMove(dir) {
         case 'down':  gAngle = 0; gMoveY =  TILESIZE; break;
     }
 }
+
