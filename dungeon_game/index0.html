@@ -18,8 +18,6 @@
             grid-template-columns: 100px 100px 100px;
             grid-template-rows: 100px 100px 100px;
             gap: 10px;
-            justify-content: center;
-            align-items: center;
         }
 
         .move-buttons button {
@@ -42,7 +40,6 @@
             visibility: hidden;
         }
     </style>
-
 </head>
 
 <body style="margin:0px; overflow:hidden">
@@ -50,17 +47,33 @@
 
     <div class="move-buttons">
         <div class="blank"></div>
-        <button onclick="tryMove('up')">↑</button>
+        <button onmousedown="startMove('up')" onmouseup="stopMove()" onmouseleave="stopMove()">↑</button>
         <div class="blank"></div>
 
-        <button onclick="tryMove('left')">←</button>
+        <button onmousedown="startMove('left')" onmouseup="stopMove()" onmouseleave="stopMove()">←</button>
         <div class="blank"></div>
-        <button onclick="tryMove('right')">→</button>
+        <button onmousedown="startMove('right')" onmouseup="stopMove()" onmouseleave="stopMove()">→</button>
 
         <div class="blank"></div>
-        <button onclick="tryMove('down')">↓</button>
+        <button onmousedown="startMove('down')" onmouseup="stopMove()" onmouseleave="stopMove()">↓</button>
         <div class="blank"></div>
     </div>
+
+    <script>
+        let moveInterval = null;
+
+        function startMove(dir) {
+            tryMove(dir); // 最初に一歩
+            moveInterval = setInterval(() => {
+                tryMove(dir);
+            }, 150);
+        }
+
+        function stopMove() {
+            clearInterval(moveInterval);
+            moveInterval = null;
+        }
+    </script>
 </body>
 
 </html>

@@ -648,6 +648,12 @@ window.onload = function()
 	TUG.init();
 }
 
+
+
+
+
+
+
 function tryMove(dir) {
     // メッセージが表示されているなら、それを消して終了
     if (gMessage1) {
@@ -667,3 +673,25 @@ function tryMove(dir) {
     }
 }
 
+
+
+
+
+
+
+
+
+let moveInterval = null;
+
+function startMove(dir) {
+    tryMove(dir); // 最初の一歩
+
+    moveInterval = setInterval(() => {
+        tryMove(dir);
+    }, 150); // 連続移動の速さ（ms）
+}
+
+function stopMove() {
+    clearInterval(moveInterval);
+    moveInterval = null;
+}
