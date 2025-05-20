@@ -2,14 +2,26 @@
 <html lang="ja">
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Script-Type" content="text/javascript">
-<script type="text/javascript" src="TUGames1.js"></script>
-<script type="text/javascript" src="main1.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <script type="text/javascript" src="TUGames1.js"></script>
+    <script type="text/javascript" src="main1.js"></script>
+
+
 </head>
 
-<body style="margin:0px;overflow:hidden">
-<canvas id="main"></canvas>
+<body style="margin:0px; overflow:hidden">
+    <canvas id="main" style="display:block;"></canvas>
+
+    <div style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); z-index:10;">
+        <button onclick="moveCharacter('up')" style="font-size:24px; padding:10px;">↑</button><br>
+        <button onclick="moveCharacter('left')" style="font-size:24px; padding:10px;">←</button>
+        <button onclick="moveCharacter('down')" style="font-size:24px; padding:10px;">↓</button>
+        <button onclick="moveCharacter('right')" style="font-size:24px; padding:10px;">→</button>
+        <button onclick="tryMove('left')">←</button>
+
+    </div>
 </body>
+
 
 </html>

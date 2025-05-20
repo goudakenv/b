@@ -647,3 +647,36 @@ window.onload = function()
 	window.addEventListener( "resize", function(){ WmSize() } );	//	ブラウザサイズ変更時、WmSize()が呼ばれるよう指示
 	TUG.init();
 }
+
+function tryMove(dir) {
+    if (gMoveX !== 0 || gMoveY !== 0 || gMessage1) return;
+
+    switch (dir) {
+        case 'left':  gAngle = 1; gMoveX = -TILESIZE; break;
+        case 'up':    gAngle = 3; gMoveY = -TILESIZE; break;
+        case 'right': gAngle = 2; gMoveX =  TILESIZE; break;
+        case 'down':  gAngle = 0; gMoveY =  TILESIZE; break;
+    }
+}
+
+
+canvas.addEventListener("click", function () {
+    if (gMessage1) {
+        gMessage1 = null;
+    }
+});
+
+function tryMove(dir) {
+    if (gMessage1) {
+        gMessage1 = null;
+        return;
+    }
+    if (gMoveX !== 0 || gMoveY !== 0) return;
+
+    switch (dir) {
+        case 'left':  gAngle = 1; gMoveX = -TILESIZE; break;
+        case 'up':    gAngle = 3; gMoveY = -TILESIZE; break;
+        case 'right': gAngle = 2; gMoveX =  TILESIZE; break;
+        case 'down':  gAngle = 0; gMoveY =  TILESIZE; break;
+    }
+}
