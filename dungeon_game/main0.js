@@ -1,3 +1,6 @@
+//	main.js　
+//JSの基本設定とパソコン上での動き全部
+
 "use strict";
 
 const	CHRHEIGHT	= 9;					//	キャラの高さ

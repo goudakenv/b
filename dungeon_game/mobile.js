@@ -1,3 +1,7 @@
+//mobile.js　
+//携帯上での動き全部
+
+
 /**
  * 指定された方向にプレイヤーを動かそうとする関数
  * @param {string} dir - 'left', 'up', 'right', 'down' のどれか
@@ -113,44 +117,57 @@ function showResult() {
  * 決定キーやボタンが押されたときに呼ばれる関数
  * メッセージが出ていれば消し、なければ戦闘の状態を次に進める
  */
-function enterAction() {
+ function enterAction() {
     if (gMessage1) {
-        // メッセージが画面にあるときは、それを消すだけで処理終了
         gMessage1 = null;
     } else {
-        // メッセージがなければ戦闘の状態を切り替える処理を行う
         switch (gPhase) {
-            case PHASE_START:            // 戦闘開始状態
-                startBattle();          // 戦闘開始処理
-                gPhase = PHASE_PLAYER_TURN; // 次はプレイヤーのターンへ
+            case PHASE_START:
+                startBattle();       // 戦闘開始処理（敵出現とか）
+                // 戦闘開始直後はコマンド表示してあげる
+                showBattleCommand();
                 break;
 
-            case PHASE_PLAYER_TURN:      // プレイヤーの行動ターン
-                playerAttack();         // プレイヤー攻撃処理
-                gPhase = PHASE_ENEMY_TURN;  // 次は敵のターンへ
+            case PHASE_PLAYER_TURN:
+                // プレイヤーのコマンド選択が確定したとき
+                if (gCursor === 0) {
+                    playerAttack();
+                } else if (gCursor === 1) {
+                    SetMessage("逃げるを選択した！");
+                    // 逃げる処理をここに
+                }
+                gPhase = PHASE_ENEMY_TURN;
                 break;
 
-            case PHASE_ENEMY_TURN:       // 敵の行動ターン
-                enemyAttack();          // 敵の攻撃処理
-                gPhase = PHASE_RESULT;      // 次は結果表示へ
+            case PHASE_ENEMY_TURN:
+                enemyAttack();
+                gPhase = PHASE_RESULT;
                 break;
 
-            case PHASE_RESULT:           // 結果表示のターン
-                showResult();           // 結果表示処理
+            case PHASE_RESULT:
+                showResult();
                 break;
         }
     }
-}
 
-/**
- * 空の関数（今は何もしない）
- * 必要なら決定ボタンの押しっぱなしなどの停止処理に使うかも
- */
-function stopEnter() {
-    // いまは空です
 }
 
 
 
 
+// 戦闘コマンド表示フェーズの定数を追加
+const PHASE_COMMAND_SELECT = 10;  // 戦闘コマンド選択中のフェーズ
 
+// 戦闘コマンドを画面に描画する関数（canvasコンテキスト ctx を引数に取る）
+function drawBattleCommand(ctx) {
+    if (gPhase !== PHASE_COMMAND_SELECT) return;
+
+    const commands = ["戦う", "逃げる"];
+    ctx.font = "24px sans-serif";
+
+    commands.forEach((cmd, i) => {
+        let text = (gCursor === i ? "→ " : "　") + cmd; // カーソル位置に矢印
+        ctx.fillStyle = (gCursor === i) ? "yellow" : "white";
+        ctx.fillText(text, 50, 100 + i * 30);
+    });
+}
