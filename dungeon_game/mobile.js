@@ -2,6 +2,7 @@
 //携帯上での動き全部
 
 
+
 /**
  * 指定された方向にプレイヤーを動かそうとする関数
  * @param {string} dir - 'left', 'up', 'right', 'down' のどれか
@@ -153,21 +154,40 @@ function showResult() {
 }
 
 
+function DrawFight(g) {
+    g.fillStyle = "#000000";							
+    g.fillRect(0, 0, WIDTH, HEIGHT);
 
+    if (gPhase <= 5) {		
+        if (IsBoss()) {
+            g.drawImage(gImgBoss, WIDTH / 2 - gImgBoss.width / 2, HEIGHT / 2 - gImgBoss.height / 2);
+        } else {
+            let w = gImgMonster.width / 4;
+            let h = gImgMonster.height;
+            g.drawImage(gImgMonster, gEnemyType * w, 0, w, h, Math.floor(WIDTH / 2 - w / 2), Math.floor(HEIGHT / 2 - h / 2), w, h);
+        }
+    }
 
-// 戦闘コマンド表示フェーズの定数を追加
-const PHASE_COMMAND_SELECT = 10;  // 戦闘コマンド選択中のフェーズ
+    DrawStatus(g);
+    DrawMessage(g);
 
-// 戦闘コマンドを画面に描画する関数（canvasコンテキスト ctx を引数に取る）
-function drawBattleCommand(ctx) {
-    if (gPhase !== PHASE_COMMAND_SELECT) return;
-
-    const commands = ["戦う", "逃げる"];
-    ctx.font = "24px sans-serif";
-
-    commands.forEach((cmd, i) => {
-        let text = (gCursor === i ? "→ " : "　") + cmd; // カーソル位置に矢印
-        ctx.fillStyle = (gCursor === i) ? "yellow" : "white";
-        ctx.fillText(text, 50, 100 + i * 30);
-    });
+    if (gPhase == 2) {  // コマンド選択フェーズ
+        const commands = ["戦う", "逃げる"];
+        g.font = "10px sans-serif";
+    
+        const baseY = 107;  // ここで全体の縦開始位置を調整
+    
+        commands.forEach((cmd, i) => {
+            let textColor = (gCursor === i) ? "yellow" : "white";
+            g.fillStyle = textColor;
+            g.fillText(cmd, 30, baseY + i * 10);  // 間隔は10pxのまま
+        });
+    
+        // カーソル矢印はフォントサイズ小さめにする
+        g.font = "18px sans-serif";
+        g.fillStyle = "yellow";
+        g.fillText("⇒", 6, baseY + 10 * gCursor);  // 矢印も同じ基準で調整
+    }
+    
+    
 }
