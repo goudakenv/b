@@ -149,8 +149,3 @@ function enterAction() {
 function stopEnter() {
     // いまは空です
 }
-
-
-
-
-
