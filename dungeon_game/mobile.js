@@ -58,17 +58,18 @@ let moveInterval = null;
         return;
     }
 
-    if (gPhase === PHASE_PLAYER_TURN) {
-        // 戦闘中はカーソル移動のみ
-        if (dir === 'up') {
-            gCursor--;
-            if (gCursor < 0) gCursor = 1;
-        } else if (dir === 'down') {
-            gCursor++;
-            if (gCursor > 1) gCursor = 0;
-        }
-        return;
+   // 戦闘中のカーソル移動
+if (gPhase === 2) {  // 2はコマンド選択中
+    if (dir === 'up') {
+        gCursor--;
+        if (gCursor < 0) gCursor = 1;
+    } else if (dir === 'down') {
+        gCursor++;
+        if (gCursor > 1) gCursor = 0;
     }
+    return;
+}
+
 
     // 戦闘フェーズ以外は通常移動
     tryMove(dir);
@@ -88,26 +89,6 @@ let moveInterval = null;
 }
 
 
-function onKeyDown(key) {
-    if (gPhase === PHASE_PLAYER_TURN) {
-        // 戦闘中は矢印キーでカーソルだけ動かす
-        if (key === 'ArrowUp') {
-            gCursor = (gCursor > 0) ? gCursor - 1 : 1;  // 上に行きすぎたら最後の選択肢へ
-        } else if (key === 'ArrowDown') {
-            gCursor = (gCursor < 1) ? gCursor + 1 : 0;  // 下に行きすぎたら最初に戻る
-        } else if (key === 'Enter') {
-            enterAction();
-        }
-        // 戦闘中は左右や他のキーは無視か拡張可能
-    } else {
-        // 戦闘フェーズ以外は矢印で移動、Enterでインタークション
-        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
-            startMove(keyToDir(key));
-        } else if (key === 'Enter') {
-            enterAction();
-        }
-    }
-}
 
 
 
@@ -242,3 +223,4 @@ function DrawFight(g) {
         g.fillText("⇒", 6, baseY + 10 * gCursor);  // 矢印も同じ基準で調整
     }
 }
+

@@ -237,7 +237,6 @@ function CommandFight()
 	// gMonster = 1;	
 	gCursor = 0;
 	SetMessage( "　戦う", 
-	// "召喚獣",
 	 "　逃げる" );
 }
 
