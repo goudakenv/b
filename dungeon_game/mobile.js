@@ -46,17 +46,25 @@ let moveInterval = null;
  * ボタンを押したら呼ぶイメージ
  * @param {string} dir - 動く方向
  */
-function startMove(dir) {
-    tryMove(dir); // まず１歩動く
+ function startMove(dir) {
+    // メッセージがあれば消して戦闘フェーズを進める
+    if (gMessage1) {
+        gMessage1 = null;
+        enterAction();
+        return;  // ここで動く処理は終わり（移動はしない）
+    }
 
-    // もしすでに動いていたら前のタイマーを止めてから再設定する
+    tryMove(dir); // まず1歩動く
+
+    // すでにタイマーがあれば止める
     if (moveInterval) clearInterval(moveInterval);
 
-    // 150ミリ秒ごとにtryMoveを呼び続けて連続で動く
+    // 連続移動のタイマーをセット
     moveInterval = setInterval(() => {
         tryMove(dir);
     }, 150);
 }
+
 
 /**
  * 動きを止める関数
@@ -188,6 +196,4 @@ function DrawFight(g) {
         g.fillStyle = "yellow";
         g.fillText("⇒", 6, baseY + 10 * gCursor);  // 矢印も同じ基準で調整
     }
-    
-    
 }
