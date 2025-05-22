@@ -47,23 +47,68 @@ let moveInterval = null;
  * @param {string} dir - 動く方向
  */
  function startMove(dir) {
-    // メッセージがあれば消して戦闘フェーズを進める
     if (gMessage1) {
         gMessage1 = null;
+        if (gPhase !== PHASE_PLAYER_TURN) {
+            // 戦闘フェーズ以外はメッセージ消しただけで移動開始しない（enterActionは呼ばない）
+            return;
+        }
+        // 戦闘フェーズならenterActionを呼ぶ（メッセージ消し＋次の戦闘行動へ）
         enterAction();
-        return;  // ここで動く処理は終わり（移動はしない）
+        return;
     }
 
-    tryMove(dir); // まず1歩動く
+    if (gPhase === PHASE_PLAYER_TURN) {
+        // 戦闘中はカーソル移動のみ
+        if (dir === 'up') {
+            gCursor--;
+            if (gCursor < 0) gCursor = 1;
+        } else if (dir === 'down') {
+            gCursor++;
+            if (gCursor > 1) gCursor = 0;
+        }
+        return;
+    }
 
-    // すでにタイマーがあれば止める
+    // 戦闘フェーズ以外は通常移動
+    tryMove(dir);
+
     if (moveInterval) clearInterval(moveInterval);
 
-    // 連続移動のタイマーをセット
     moveInterval = setInterval(() => {
         tryMove(dir);
     }, 150);
 }
+
+/**
+ * 戦闘の選択肢を表示する関数
+ */
+ function showBattleCommand() {
+    gCursor = 0; // ← ここでカーソルを「戦う」に初期化
+}
+
+
+function onKeyDown(key) {
+    if (gPhase === PHASE_PLAYER_TURN) {
+        // 戦闘中は矢印キーでカーソルだけ動かす
+        if (key === 'ArrowUp') {
+            gCursor = (gCursor > 0) ? gCursor - 1 : 1;  // 上に行きすぎたら最後の選択肢へ
+        } else if (key === 'ArrowDown') {
+            gCursor = (gCursor < 1) ? gCursor + 1 : 0;  // 下に行きすぎたら最初に戻る
+        } else if (key === 'Enter') {
+            enterAction();
+        }
+        // 戦闘中は左右や他のキーは無視か拡張可能
+    } else {
+        // 戦闘フェーズ以外は矢印で移動、Enterでインタークション
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+            startMove(keyToDir(key));
+        } else if (key === 'Enter') {
+            enterAction();
+        }
+    }
+}
+
 
 
 /**
